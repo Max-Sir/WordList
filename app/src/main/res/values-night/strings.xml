@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_new_word_or_note_text">Add new Word or Note</string>
+    <string name="confirm_str">Confirm</string>
+    <string name="enter_here_new_word_welcome_hint_text">Enter here new Word:</string>
+    <string name="sorted_by_alphabet">Sorted by alphabet</string>
+    <string name="reversed_order_words_text">Reversed order words</string>
+    <string name="first_3_alphabeticaly_sorted_words">first 3 alphabeticaly sorted words</string>
+</resources>
