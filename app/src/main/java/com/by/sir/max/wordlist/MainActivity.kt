@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ import com.by.sir.max.wordlist.databinding.ActivityMainBinding
 import com.by.sir.max.wordlist.recyclerview.NotifyGesture
 import com.by.sir.max.wordlist.recyclerview.adapter.WordAdapter
 import com.by.sir.max.wordlist.repository.Repository
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_list_item.view.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -42,20 +44,51 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             mainRecyclerView.adapter = adapter
             mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+
             val swipe = object : NotifyGesture() {
+
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     super.onSwiped(viewHolder, direction)
                     when (direction) {
                         ItemTouchHelper.LEFT -> {
-                            lifecycleScope.launch{
+                            Snackbar.make(
+                                viewHolder.itemView,
+                                "Archived",
+                                Snackbar.LENGTH_INDEFINITE
+                            )
+                                .setDuration(2000)
+                                .setAction("Undo") {
+
+
+                                }
+                                .show()
+
+
+                            lifecycleScope.launch {
                                 delay(100L)
                                 adapter.notifyDataSetChanged()
                             }
                         }
                         ItemTouchHelper.RIGHT -> {
+
                             viewHolder.itemView.item_text.text?.toString()
-                                ?.let { viewModel.deleteWord(it) }
+                                ?.let {
+                                    viewModel.deleteWord(it)
+
+                                    Snackbar.make(
+                                        viewHolder.itemView,
+                                        "Deleted",
+                                        Snackbar.LENGTH_INDEFINITE
+                                    )
+                                        .setDuration(5000)
+                                        .setAction("Undo") { view ->
+                                            viewModel.addWord(it)
+                                            view.visibility = View.INVISIBLE
+                                            viewModel.getWords()
+                                        }
+                                        .show()
+                                }
                             viewModel.getWords()
                             adapter.notifyDataSetChanged()
                             notifyChange()
@@ -83,17 +116,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.filter_sorted_by_alphabet ->
-            {
+        when (item.itemId) {
+            R.id.filter_sorted_by_alphabet -> {
                 viewModel.getSortedWords()
             }
-            R.id.filter_reversed_sort_words ->
-            {
+            R.id.filter_reversed_sort_words -> {
                 viewModel.getReversedWords()
             }
-            R.id.get_first_three_by_alpha ->
-            {
+            R.id.get_first_three_by_alpha -> {
                 viewModel.getFirstWords(3)
             }
         }
@@ -102,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_filter_words_menu,menu)
+        menuInflater.inflate(R.menu.main_filter_words_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
