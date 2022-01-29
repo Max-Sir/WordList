@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="earl_gray">#645F5E</color>
+    <color name="nice_green">#64DD17</color>
+    <color name="nav_red">#DD2C00</color>
 </resources>
