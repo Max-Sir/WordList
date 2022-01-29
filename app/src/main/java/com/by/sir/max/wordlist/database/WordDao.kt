@@ -27,4 +27,6 @@ interface WordDao {
     @Query("SELECT * FROM Word ORDER BY word ASC")
     suspend fun getOrderedWords(): List<Word>
 
+    @Query("UPDATE Word SET word =:newWord WHERE word = :oldWord")
+    suspend fun updateNote(oldWord: String, newWord: String)
 }

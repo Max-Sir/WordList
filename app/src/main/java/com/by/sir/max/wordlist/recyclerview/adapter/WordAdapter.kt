@@ -4,6 +4,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,8 @@ import com.by.sir.max.wordlist.R
 import com.by.sir.max.wordlist.entity.Word
 import kotlinx.android.synthetic.main.main_list_item.view.*
 
-class WordAdapter() : ListAdapter<Word, WordAdapter.WordViewHolder>(DiffCallback) {
+class WordAdapter(val onClickListener: OnClickListener) :
+    ListAdapter<Word, WordAdapter.WordViewHolder>(DiffCallback) {
     inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     companion object {
         object DiffCallback : DiffUtil.ItemCallback<Word>() {
@@ -34,8 +36,27 @@ class WordAdapter() : ListAdapter<Word, WordAdapter.WordViewHolder>(DiffCallback
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val item = getItem(position)
         holder.itemView.apply {
-            item_button.setOnClickListener { }
+            //item_button.visibility = View.GONE
+            item_button.setOnClickListener {
+                item_text.text?.toString()
+                    ?.let { newWord ->
+                        onClickListener.onClick(item.word, newWord)
+                        it.visibility = View.GONE
+                    }
+            }
             item_text.text = Editable.Factory.getInstance().newEditable(item.word)
+            item_text.doOnTextChanged { text, start, before, count ->
+                item_button.visibility = View.VISIBLE
+                if (count == 0) {
+                    item_button.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    class OnClickListener(val listener: (String, String) -> Unit) {
+        fun onClick(oldWord: String, newWord: String) {
+            listener.invoke(oldWord, newWord)
         }
     }
 }

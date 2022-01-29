@@ -6,4 +6,6 @@
     <string name="sorted_by_alphabet">Sorted by alphabet</string>
     <string name="reversed_order_words_text">Reversed order words</string>
     <string name="first_3_alphabeticaly_sorted_words">first 3 alphabeticaly sorted words</string>
+    <string name="save">Save</string>
+    <string name="you_can_edit_this_text_hint">You can edit this</string>
 </resources>

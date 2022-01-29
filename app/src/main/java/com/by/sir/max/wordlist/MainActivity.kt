@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = MainViewModel(repository)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        adapter = WordAdapter()
+        val onClickListener = WordAdapter.OnClickListener(viewModel::updateNote)
+        adapter = WordAdapter(onClickListener)
         binding.apply {
             mainRecyclerView.adapter = adapter
             mainRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)

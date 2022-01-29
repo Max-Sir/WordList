@@ -20,16 +20,20 @@ class Repository(val dataSource: WordDatabase) {
         return dao.getWords()
     }
 
-    suspend fun getReversed():List<Word>{
+    suspend fun getReversed(): List<Word> {
         return dao.getReverseOrderedWords()
     }
 
-    suspend fun getFirst(n:Int):List<Word>{
+    suspend fun getFirst(n: Int): List<Word> {
         return dao.getFirst(n)
     }
 
-    suspend fun getOrdered():List<Word>{
+    suspend fun getOrdered(): List<Word> {
         return dao.getOrderedWords()
+    }
+
+    suspend fun updateNote(oldWord: String, newWord: String) {
+        dao.updateNote(oldWord, newWord)
     }
 
 }

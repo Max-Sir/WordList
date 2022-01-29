@@ -48,4 +48,8 @@ class MainViewModel(val repository: Repository) : ViewModel() {
         list.postValue(repository.getOrdered())
     }
 
+    fun updateNote(oldWord: String, newWord: String) = viewModelScope.launch {
+        repository.updateNote(oldWord, newWord)
+    }
+
 }
