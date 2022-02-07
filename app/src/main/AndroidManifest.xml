@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.by.sir.max.wordlist">
-
+<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/note_task_comment_message_postit_post_it_108544"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/note_task_comment_message_postit_post_it_108544"
         android:supportsRtl="true"
         android:theme="@style/Theme.WordList">
+
+        <receiver android:name=".notifications.MyNotificationPublisher"/>
         <activity
             android:name=".activities.AddWordActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

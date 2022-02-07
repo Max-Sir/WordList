@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.by.sir.max.wordlist.activities.AddWordActivity
 import com.by.sir.max.wordlist.database.WordDatabase
 import com.by.sir.max.wordlist.databinding.ActivityMainBinding
+import com.by.sir.max.wordlist.notifications.NotificationHelper
 import com.by.sir.max.wordlist.recyclerview.NotifyGesture
 import com.by.sir.max.wordlist.recyclerview.adapter.WordAdapter
 import com.by.sir.max.wordlist.repository.Repository
@@ -53,6 +54,13 @@ class MainActivity : AppCompatActivity() {
                     super.onSwiped(viewHolder, direction)
                     when (direction) {
                         ItemTouchHelper.LEFT -> {
+                            NotificationHelper.scheduleNotification(
+                                this@MainActivity,
+                                2000,
+                                NotificationHelper.NOTIFICATION_ID,
+                                this@MainActivity.packageName,
+                                viewHolder.itemView.item_text.text.toString()
+                            )
                             Snackbar.make(
                                 viewHolder.itemView,
                                 "Archived",
@@ -60,7 +68,6 @@ class MainActivity : AppCompatActivity() {
                             )
                                 .setDuration(2000)
                                 .setAction("Undo") {
-
 
                                 }
                                 .show()
